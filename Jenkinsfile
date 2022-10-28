@@ -27,6 +27,7 @@ pipeline {
           sh 'docker push vinit747/numeric-app:""$GIT_COMMIT""'
         }
       }
+      
     }
   }
 }
