@@ -40,7 +40,7 @@ public class NumericController {
 			}
 			return message;
 		}
-
+// Commenting for jenkins build
 		@GetMapping("/increment/{value}")
 		public int increment(@PathVariable int value) {
 			ResponseEntity<String> responseEntity = restTemplate.getForEntity(baseURL + '/' + value, String.class);
