@@ -3,11 +3,11 @@ pipeline {
 
   stages {
     stage('Build Artifact') {
-          steps {
-            sh "mvn clean package -DskipTests=true"
-            archive 'target/*.jar' 
-          }
+      steps {
+        sh "mvn clean package -DskipTests=true"
+        archive 'target/*.jar' 
       }
+    }
     stage('Unit Test') {
         steps {
           sh "mvn test" 
@@ -25,6 +25,14 @@ pipeline {
           sh 'printenv'
           sh 'docker build -t vinit747/numeric-app:""$GIT_COMMIT"" .'
           sh 'docker push vinit747/numeric-app:""$GIT_COMMIT""'
+        }
+      }
+    }
+    stage('Kubernetes Deployment - DEV') {
+      steps {
+        withKubeConfig([credentialsId:'kubeconfig']) {
+          sh "sed -i 's#replacevinit747/numeric-app:${GIT_COMMIT}#g' k8s_service_service.yaml"
+          sh "kubectl apply -f k8s_deployment_service.yaml"
         }
       }
     }
