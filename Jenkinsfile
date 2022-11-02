@@ -19,16 +19,16 @@ pipeline {
           }
         }
     }
-    stage('PIT mutation Tests') { 
-      steps {
-        sh "mvn org.pitest:pitest-maven:mutationCoverage"
-      }
-      post {
-        always {
-          pimutation mutationStatsFile: '**/target/pit-reports/**/mutations.xml'
-        }
-      }
-    }
+    // stage('PIT mutation Tests') { 
+    //   steps {
+    //     sh "mvn org.pitest:pitest-maven:mutationCoverage"
+    //   }
+    //   post {
+    //     always {
+    //       pimutation mutationStatsFile: '**/target/pit-reports/**/mutations.xml'
+    //     }
+    //   }
+    // }
     stage('Sonar SAST') {
       steps {
         sh "mvn clean verify sonar:sonar \
